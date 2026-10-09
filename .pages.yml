@@ -1,0 +1,42 @@
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: products
+    label: 产品
+    type: collection
+    path: src/content/products
+    filename: '{title}.md'
+    view:
+      fields: [title, category, price, featured]
+    fields:
+      - name: title
+        label: 产品名称
+        type: string
+        required: true
+      - name: category
+        label: 分类
+        type: string
+        required: true
+      - name: price
+        label: 价格
+        type: number
+      - name: description
+        label: 简短描述
+        type: string
+      - name: images
+        label: 产品图片
+        type: image
+        list: true
+      - name: featured
+        label: 推荐
+        type: boolean
+        default: false
+      - name: order
+        label: 排序（数字越小越靠前）
+        type: number
+        default: 0
+      - name: body
+        label: 详细描述
+        type: rich-text
