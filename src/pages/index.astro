@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const products = (await getCollection('products'))
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+
+const categories = [...new Set(products.map(p => p.data.category))];
+---
+<BaseLayout title="首页">
+  <main class="container">
+    <section class="hero">
+      <h1>产品展示</h1>
+      <p>共 {products.length} 款产品</p>
+    </section>
+
+    <section class="category-nav">
+      {categories.map(cat => (
+        <a href={`/categories/${encodeURIComponent(cat)}/`} class="category-tag">{cat}</a>
+      ))}
+    </section>
+
+    <section class="product-grid">
+      {products.map(product => (
+        <a href={`/products/${product.slug}/`} class="product-card">
+          <div class="product-image">
+            <img src={product.data.images?.[0] || '/images/placeholder.jpg'} alt={product.data.title} loading="lazy" />
+          </div>
+          <div class="product-info">
+            <span class="product-category">{product.data.category}</span>
+            <h3>{product.data.title}</h3>
+            {product.data.price && <p class="product-price">¥{product.data.price}</p>}
+            {product.data.description && <p class="product-desc">{product.data.description}</p>}
+          </div>
+        </a>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
