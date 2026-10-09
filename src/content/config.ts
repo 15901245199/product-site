@@ -13,4 +13,26 @@ const products = defineCollection({
   }),
 });
 
-export const collections = { products };
+// 新增：轮播图集合
+const banners = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    image: z.string(),
+    link: z.string().optional(),
+    order: z.number().default(0),
+  }),
+});
+
+// 新增：自定义链接集合
+const links = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    url: z.string(),
+    icon: z.string().optional(),
+    order: z.number().default(0),
+  }),
+});
+
+export const collections = { products, banners, links };
