@@ -3,16 +3,16 @@ media:
   output: /images
 
 content:
-  - name: products
-    label: 产品
+  - name: products          # 必须保留英文！
+    label: 产品             # 这里可以显示为中文
     type: collection
     path: src/content/products
-    filename: '{title}.md'
+    filename: '{title}.md'  # 这里的 title 对应下方字段的 name，不能写成 '{标题}.md'
     view:
       fields: [title, category, price, featured]
     fields:
-      - name: title
-        label: 产品名称
+      - name: title          # 系统内部叫 title，不要改成中文
+        label: 产品名称       # 界面上显示为“产品名称”
         type: string
         required: true
       - name: category
