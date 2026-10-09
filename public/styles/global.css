@@ -64,17 +64,19 @@ body {
   scroll-snap-type: x mandatory;
   gap: 12px;
   padding: 10px 16px;
-  scrollbar-width: none; /* 隐藏滚动条 */
+  scrollbar-width: none;
 }
-.carousel::-webkit-scrollbar { display: none; }
+
 .carousel-item {
   flex: 0 0 88%;
   scroll-snap-align: center;
   border-radius: 12px;
   overflow: hidden;
+  /* 关键：固定宽高比，防止图片撑开容器 */
   aspect-ratio: 16 / 9;
   background: #eee;
 }
+
 .carousel-item img {
   width: 100%;
   height: 100%;
