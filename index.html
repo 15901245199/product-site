@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>服装仓库数字展厅 - 款号查询与看样目录</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 头部导航 & 搜索栏 -->
+  <header class="header">
+    <div class="container header-content">
+      <div class="logo">
+        <h2>服装仓储展厅</h2>
+        <span>货源/看样/编号查询目录</span>
+      </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="请输入款号（如：CF8878）、面料、克重或品类...">
+        <button id="searchBtn">搜索</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体内容 -->
+  <div class="container main-layout">
+    <!-- 侧边分类与筛选 -->
+    <aside class="sidebar">
+      <h3>分类筛选</h3>
+      <div class="filter-group">
+        <h4>品类</h4>
+        <ul id="categoryFilter">
+          <li class="active" data-cat="all">全部品类</li>
+          <li data-cat="T恤">T恤</li>
+          <li data-cat="POLO衫">POLO衫</li>
+          <li data-cat="卫衣">卫衣/棒球服</li>
+          <li data-cat="外套/冲锋衣">外套/冲锋衣</li>
+          <li data-cat="工装">工装/职业装</li>
+        </ul>
+      </div>
+
+      <div class="filter-group">
+        <h4>常见克重</h4>
+        <ul id="weightFilter">
+          <li class="active" data-weight="all">全部克重</li>
+          <li data-weight="180g">180g - 200g（轻薄透气）</li>
+          <li data-weight="220g">220g - 260g（适中适性）</li>
+          <li data-weight="320g">320g+（重磅硬挺）</li>
+        </ul>
+      </div>
+
+      <div class="contact-card">
+        <h4>需要看样或批量询价？</h4>
+        <p>微信/电话联系我们的仓库专员</p>
+        <div class="phone">📞 138-0000-0000</div>
+        <small>工作时间：09:00 - 18:00</small>
+      </div>
+    </aside>
+
+    <!-- 右侧商品网格 -->
+    <main class="content">
+      <div class="toolbar">
+        <span>共找到 <strong id="productCount">0</strong> 款商品</span>
+      </div>
+      <div class="product-grid" id="productGrid">
+        <!-- 商品卡片会通过 JS 动态渲染在这里 -->
+      </div>
+    </main>
+  </div>
+
+  <!-- 商品细节弹窗 (Modal) -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <div class="modal-body">
+        <div class="modal-left">
+          <img id="modalMainImg" src="" alt="商品主图">
+          <div class="thumb-list" id="modalThumbList"></div>
+        </div>
+        <div class="modal-right">
+          <div class="sku-tag" id="modalSku">款号：--</div>
+          <h2 id="modalTitle">--</h2>
+          
+          <div class="param-box">
+            <div class="param-item"><strong>面料成分：</strong><span id="modalFabric">--</span></div>
+            <div class="param-item"><strong>面料克重：</strong><span id="modalWeight">--</span></div>
+            <div class="param-item"><strong>适用工艺：</strong><span id="modalCraft">--</span></div>
+            <div class="param-item"><strong>可选尺码：</strong><span id="modalSizes">--</span></div>
+          </div>
+
+          <div class="color-section">
+            <div style="margin-bottom:8px; font-weight:bold;">可选颜色：</div>
+            <div class="color-tags" id="modalColors"></div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-copy" id="copyBtn">📋 一键复制款号与参数</button>
+            <button class="btn btn-contact" id="contactBtn">💬 联系调货/获取报价</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
