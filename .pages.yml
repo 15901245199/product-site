@@ -1,18 +1,13 @@
-media:
-  input: public/images
-  output: /images
-
 content:
-  - name: products          # 必须保留英文！
-    label: 产品             # 这里可以显示为中文
+  # ... 保留你原有的 products 配置 ...
+  - name: products
+    label: 产品
     type: collection
     path: src/content/products
-    filename: '{title}.md'  # 这里的 title 对应下方字段的 name，不能写成 '{标题}.md'
-    view:
-      fields: [title, category, price, featured]
+    filename: '{title}.md'
     fields:
-      - name: title          # 系统内部叫 title，不要改成中文
-        label: 产品名称       # 界面上显示为“产品名称”
+      - name: title
+        label: 产品名称
         type: string
         required: true
       - name: category
@@ -34,9 +29,55 @@ content:
         type: boolean
         default: false
       - name: order
-        label: 排序（数字越小越靠前）
+        label: 排序
         type: number
         default: 0
       - name: body
         label: 详细描述
         type: rich-text
+
+  # 新增：轮播图管理
+  - name: banners
+    label: 首页轮播图
+    type: collection
+    path: src/content/banners
+    filename: '{title}.md'
+    fields:
+      - name: title
+        label: 标题
+        type: string
+        required: true
+      - name: image
+        label: 图片
+        type: image
+        required: true
+      - name: link
+        label: 跳转链接 (可选)
+        type: string
+      - name: order
+        label: 排序
+        type: number
+        default: 0
+
+  # 新增：自定义链接管理
+  - name: links
+    label: 自定义链接
+    type: collection
+    path: src/content/links
+    filename: '{title}.md'
+    fields:
+      - name: title
+        label: 名称
+        type: string
+        required: true
+      - name: url
+        label: 链接地址
+        type: string
+        required: true
+      - name: icon
+        label: 图标 (Emoji或字符)
+        type: string
+      - name: order
+        label: 排序
+        type: number
+        default: 0
