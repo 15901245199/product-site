@@ -1,0 +1,30 @@
+[
+  {
+    "sku": "CF8878",
+    "name": "锦纶防蚊薄荷黑科技透气防晒衣男女款",
+    "category": "外套/冲锋衣",
+    "weight": "180g",
+    "fabric": "锦纶防晒黑科技面料",
+    "craft": "适合刺绣 / 烫画",
+    "sizes": "M / L / XL / 2XL / 3XL",
+    "colors": ["薄荷绿", "纯洁白", "高级灰", "酷炫黑"],
+    "image": "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
+    "thumbs": [
+      "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80"
+    ]
+  },
+  {
+    "sku": "CQD-7904",
+    "name": "320g华棉重磅落肩款圆领套头卫衣",
+    "category": "卫衣",
+    "weight": "320g",
+    "fabric": "320g 华棉精梳重磅棉",
+    "craft": "适合丝网印 / 胶印 / 刺绣",
+    "sizes": "S / M / L / XL / 2XL / 3XL / 4XL",
+    "colors": ["燕麦色", "黑色", "麻灰", "藏青"],
+    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80",
+    "thumbs": [
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80"
+    ]
+  }
+]
