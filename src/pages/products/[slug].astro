@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map(product => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+const { Content } = await product.render();
+---
+<BaseLayout title={product.data.title} description={product.data.description}>
+  <main class="container">
+    <a href="/" class="back-link">← 返回首页</a>
+    <div class="product-detail">
+      <div class="product-images">
+        {(product.data.images || ['/images/placeholder.jpg']).map(img => (
+          <img src={img} alt={product.data.title} />
+        ))}
+      </div>
+      <div class="product-detail-info">
+        <span class="product-category">{product.data.category}</span>
+        <h1>{product.data.title}</h1>
+        {product.data.price && <p class="product-price">¥{product.data.price}</p>}
+        <div class="product-body">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+---
+// ... 你原有的代码 ...
+---
+<BaseLayout title={product.data.title} description={product.data.description}>
+  <div style="padding: 16px;">
+    <!-- 原有的产品详情结构可以保留 -->
+    <!-- ... -->
+    
+    <!-- 新增收藏按钮 -->
+    <button id="favBtn" style="width: 100%; padding: 14px; background: #0066cc; color: #fff; border: none; border-radius: 8px; font-size: 1rem; margin-top: 20px; cursor: pointer;">
+      ❤️ 收藏此产品
+    </button>
+  </div>
+  
+  <script define:vars={{ productSlug: product.slug, productTitle: product.data.title, productImage: product.data.images?.[0] }}>
+    document.getElementById('favBtn').addEventListener('click', () => {
+      const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+      const exists = favs.find(f => f.slug === productSlug);
+      if (!exists) {
+        favs.push({ slug: productSlug, title: productTitle, image: productImage });
+        localStorage.setItem('favorites', JSON.stringify(favs));
+        alert('已加入收藏！');
+      } else {
+        alert('已经在收藏夹里了！');
+      }
+    });
+  </script>
+</BaseLayout>
