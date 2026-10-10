@@ -1,10 +1,15 @@
+media:
+  input: public/images
+  output: /images
+
 content:
-  # ... 保留你原有的 products 配置 ...
   - name: products
     label: 产品
     type: collection
     path: src/content/products
     filename: '{title}.md'
+    view:
+      fields: [title, category, price, featured]
     fields:
       - name: title
         label: 产品名称
@@ -36,7 +41,6 @@ content:
         label: 详细描述
         type: rich-text
 
-  # 新增：轮播图管理
   - name: banners
     label: 首页轮播图
     type: collection
@@ -59,7 +63,6 @@ content:
         type: number
         default: 0
 
-  # 新增：自定义链接管理
   - name: links
     label: 自定义链接
     type: collection
