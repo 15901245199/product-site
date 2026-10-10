@@ -1,28 +1,39 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Splide, SplideSlide } from 'astro-splide';
+import '@splidejs/splide/css';
 
-// 获取轮播图、产品、自定义链接
 const banners = (await getCollection('banners')).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 const products = await getCollection('products');
 const links = (await getCollection('links')).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
-
-// 提取所有分类（去重）
 const categories = [...new Set(products.map(p => p.data.category))];
 ---
 <BaseLayout title="首页">
-  <!-- 顶部轮播图 -->
   {banners.length > 0 && (
-    <section class="carousel">
+    <Splide
+      options={{
+        type: 'loop',
+        autoplay: true,
+        interval: 3000,
+        pauseOnHover: true,
+        arrows: false,
+        pagination: true,
+        gap: '12px',
+        perPage: 1,
+      }}
+      aria-label="首页轮播图"
+    >
       {banners.map(banner => (
-        <a href={banner.data.link || '#'} class="carousel-item">
-          <img src={banner.data.image} alt={banner.data.title} />
-        </a>
+        <SplideSlide>
+          <a href={banner.data.link || '#'}>
+            <img src={banner.data.image} alt={banner.data.title} />
+          </a>
+        </SplideSlide>
       ))}
-    </section>
+    </Splide>
   )}
 
-  <!-- 中间大分类 -->
   <section>
     <h2 style="padding: 0 16px; font-size: 1.1rem; margin-top: 10px;">产品分类</h2>
     <div class="category-grid">
@@ -35,7 +46,6 @@ const categories = [...new Set(products.map(p => p.data.category))];
     </div>
   </section>
 
-  <!-- 自定义跳转链接 -->
   {links.length > 0 && (
     <section style="padding: 16px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">推荐服务</h2>
@@ -49,19 +59,13 @@ const categories = [...new Set(products.map(p => p.data.category))];
     </section>
   )}
 
-  <!-- 推荐产品（可选） -->
   <section style="padding: 16px;">
     <h2 style="font-size: 1.1rem; margin-bottom: 12px;">热门产品</h2>
     <div class="product-grid" style="padding: 0;">
       {products.slice(0, 4).map(product => (
         <a href={`/products/${product.slug}/`} class="product-card">
-          <div class="product-image">
-            <img src={product.data.images?.[0] || '/images/placeholder.jpg'} alt={product.data.title} />
-          </div>
-          <div class="product-info">
-            <h3 style="font-size: 0.9rem;">{product.data.title}</h3>
-            <p class="product-price" style="font-size: 0.9rem;">¥{product.data.price}</p>
-          </div>
+          <div class="product-image"><img src={product.data.images?.[0] || '/images/placeholder.jpg'} alt={product.data.title} /></div>
+          <div class="product-info"><h3>{product.data.title}</h3><p class="product-price">¥{product.data.price}</p></div>
         </a>
       ))}
     </div>
