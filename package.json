@@ -8,6 +8,8 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^4.16.0"
+    "astro": "^4.16.0",
+    "astro-splide": "^2.1.1",
+    "@splidejs/splide": "^4.1.4"
   }
 }
