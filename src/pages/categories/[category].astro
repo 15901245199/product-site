@@ -5,34 +5,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 export async function getStaticPaths() {
   const products = await getCollection('products');
   const categories = [...new Set(products.map(p => p.data.category))];
-  return categories.map(category => ({
-    params: { category },
-    props: { category },
-  }));
+  return categories.map(category => ({ params: { category }, props: { category } }));
 }
 
 const { category } = Astro.props;
-const products = (await getCollection('products'))
-  .filter(p => p.data.category === category)
-  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const products = (await getCollection('products')).filter(p => p.data.category === category).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 ---
 <BaseLayout title={category}>
-  <main class="container">
-    <a href="/" class="back-link">← 返回首页</a>
-    <h1 class="page-title">{category}</h1>
-    <div class="product-grid">
-      {products.map(product => (
-        <a href={`/products/${product.slug}/`} class="product-card">
-          <div class="product-image">
-            <img src={product.data.images?.[0] || '/images/placeholder.jpg'} alt={product.data.title} loading="lazy" />
-          </div>
-          <div class="product-info">
-            <span class="product-category">{product.data.category}</span>
-            <h3>{product.data.title}</h3>
-            {product.data.price && <p class="product-price">¥{product.data.price}</p>}
-          </div>
-        </a>
-      ))}
-    </div>
-  </main>
+  <a href="/categories/" class="back-link">← 返回分类</a>
+  <h1 class="page-title">{category}</h1>
+  <div class="product-grid">
+    {products.map(product => (
+      <a href={`/products/${product.slug}/`} class="product-card">
+        <div class="product-image"><img src={product.data.images?.[0] || '/images/placeholder.jpg'} alt={product.data.title} /></div>
+        <div class="product-info"><h3>{product.data.title}</h3><p class="product-price">¥{product.data.price}</p></div>
+      </a>
+    ))}
+  </div>
 </BaseLayout>
