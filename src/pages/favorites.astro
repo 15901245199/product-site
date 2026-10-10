@@ -2,20 +2,31 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="我的收藏">
-  <h1 style="padding: 16px;">我的收藏</h1>
-  <div id="favoritesList" class="product-grid"></div>
+  <div style="padding: 16px;">
+    <h1 style="font-size: 1.2rem; margin-bottom: 16px;">我的收藏</h1>
+    <div id="favoritesList" class="product-grid" style="padding: 0;"></div>
+  </div>
   <script>
     const list = document.getElementById('favoritesList');
-    const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
-    if (favs.length === 0) {
-      list.innerHTML = '<p style="padding:16px;color:#888;">暂无收藏产品</p>';
-    } else {
-      list.innerHTML = favs.map(p => `
-        <a href="/products/${p.slug}/" class="product-card">
-          <div class="product-image"><img src="${p.image || '/images/placeholder.jpg'}" /></div>
-          <div class="product-info"><h3 style="font-size:0.9rem;">${p.title}</h3></div>
-        </a>
-      `).join('');
+    function renderFavorites() {
+      const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+      if (favs.length === 0) { list.innerHTML = '<p style="grid-column: span 2; text-align: center; color: #888; padding: 20px;">暂无收藏产品</p>'; return; }
+      list.innerHTML = favs.map((p, index) => `
+        <div class="product-card" style="position: relative;">
+          <a href="/products/${p.slug}/" style="display: block;"><div class="product-image"><img src="${p.image || '/images/placeholder.jpg'}" /></div><div class="product-info"><h3>${p.title}</h3></div></a>
+          <button class="remove-btn" data-index="${index}" style="position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">❌</button>
+        </div>`).join('');
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const index = parseInt(e.target.getAttribute('data-index'));
+          const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+          favs.splice(index, 1);
+          localStorage.setItem('favorites', JSON.stringify(favs));
+          renderFavorites();
+        });
+      });
     }
+    renderFavorites();
   </script>
 </BaseLayout>
