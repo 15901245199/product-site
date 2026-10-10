@@ -6,42 +6,41 @@ content:
   - name: products
     label: 服装仓库商品管理
     type: file
-    file: products.json
+    path: products.json
+    format: json
+    list: true
     fields:
-      - name: products
-        label: 商品列表
-        type: list
-        fields:
-          - name: sku
-            label: 款号 (SKU)
-            type: string
-          - name: name
-            label: 商品名称
-            type: string
-          - name: category
-            label: 分类
-            type: select
-            options:
-              - T恤
-              - POLO衫
-              - 卫衣
-              - 外套/冲锋衣
-              - 工装
-          - name: weight
-            label: 克重
-            type: string
-          - name: fabric
-            label: 面料成分
-            type: string
-          - name: craft
-            label: 适用工艺
-            type: string
-          - name: sizes
-            label: 可选尺码
-            type: string
-          - name: colors
-            label: 颜色列表 (多个颜色用回车或逗号)
-            type: list
-          - name: image
-            label: 商品主图
-            type: image
+      - name: sku
+        label: 款号 (SKU)
+        type: string
+      - name: name
+        label: 商品名称
+        type: string
+      - name: category
+        label: 分类
+        type: select
+        options:
+          - T恤
+          - POLO衫
+          - 卫衣
+          - 外套/冲锋衣
+          - 工装
+      - name: weight
+        label: 克重
+        type: string
+      - name: fabric
+        label: 面料成分
+        type: string
+      - name: craft
+        label: 适用工艺
+        type: string
+      - name: sizes
+        label: 可选尺码
+        type: string
+      - name: colors
+        label: 颜色列表
+        type: string
+        list: true
+      - name: image
+        label: 商品主图
+        type: image
