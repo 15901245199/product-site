@@ -4,59 +4,43 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
-  return products.map(product => ({
-    params: { slug: product.slug },
-    props: { product },
-  }));
+  return products.map(product => ({ params: { slug: product.slug }, props: { product } }));
 }
 
 const { product } = Astro.props;
 const { Content } = await product.render();
 ---
 <BaseLayout title={product.data.title} description={product.data.description}>
-  <main class="container">
-    <a href="/" class="back-link">← 返回首页</a>
-    <div class="product-detail">
-      <div class="product-images">
-        {(product.data.images || ['/images/placeholder.jpg']).map(img => (
-          <img src={img} alt={product.data.title} />
-        ))}
-      </div>
-      <div class="product-detail-info">
-        <span class="product-category">{product.data.category}</span>
-        <h1>{product.data.title}</h1>
-        {product.data.price && <p class="product-price">¥{product.data.price}</p>}
-        <div class="product-body">
-          <Content />
-        </div>
-      </div>
+  <a href="/" class="back-link">← 返回首页</a>
+  <div class="product-detail">
+    <div class="product-images">
+      {(product.data.images || ['/images/placeholder.jpg']).map(img => <img src={img} alt={product.data.title} />)}
     </div>
-  </main>
-</BaseLayout>
----
-// ... 你原有的代码 ...
----
-<BaseLayout title={product.data.title} description={product.data.description}>
-  <div style="padding: 16px;">
-    <!-- 原有的产品详情结构可以保留 -->
-    <!-- ... -->
-    
-    <!-- 新增收藏按钮 -->
-    <button id="favBtn" style="width: 100%; padding: 14px; background: #0066cc; color: #fff; border: none; border-radius: 8px; font-size: 1rem; margin-top: 20px; cursor: pointer;">
-      ❤️ 收藏此产品
-    </button>
+    <div class="product-detail-info">
+      <span style="color:#0066cc;font-size:0.8rem;">{product.data.category}</span>
+      <h1 style="margin: 8px 0;">{product.data.title}</h1>
+      {product.data.price && <p class="product-price" style="font-size:1.2rem;">¥{product.data.price}</p>}
+      <div class="product-body"><Content /></div>
+    </div>
+    <button id="favBtn" style="width: 100%; padding: 14px; background: #0066cc; color: #fff; border: none; border-radius: 8px; font-size: 1rem; margin-top: 20px; cursor: pointer;">❤️ 收藏此产品</button>
   </div>
-  
+
   <script define:vars={{ productSlug: product.slug, productTitle: product.data.title, productImage: product.data.images?.[0] }}>
-    document.getElementById('favBtn').addEventListener('click', () => {
-      const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
-      const exists = favs.find(f => f.slug === productSlug);
+    const btn = document.getElementById('favBtn');
+    const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const isFav = favs.some(f => f.slug === productSlug);
+    if (isFav) { btn.textContent = '💔 取消收藏'; btn.style.background = '#888'; }
+    btn.addEventListener('click', () => {
+      let currentFavs = JSON.parse(localStorage.getItem('favorites') || '[]');
+      const exists = currentFavs.some(f => f.slug === productSlug);
       if (!exists) {
-        favs.push({ slug: productSlug, title: productTitle, image: productImage });
-        localStorage.setItem('favorites', JSON.stringify(favs));
-        alert('已加入收藏！');
+        currentFavs.push({ slug: productSlug, title: productTitle, image: productImage });
+        localStorage.setItem('favorites', JSON.stringify(currentFavs));
+        alert('已加入收藏！'); btn.textContent = '💔 取消收藏'; btn.style.background = '#888';
       } else {
-        alert('已经在收藏夹里了！');
+        currentFavs = currentFavs.filter(f => f.slug !== productSlug);
+        localStorage.setItem('favorites', JSON.stringify(currentFavs));
+        alert('已取消收藏！'); btn.textContent = '❤️ 收藏此产品'; btn.style.background = '#0066cc';
       }
     });
   </script>
