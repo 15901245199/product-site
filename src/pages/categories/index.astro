@@ -8,10 +8,7 @@ const categories = [...new Set(products.map(p => p.data.category))];
   <h1 style="padding: 16px;">全部分类</h1>
   <div class="category-grid">
     {categories.map(cat => (
-      <a href={`/categories/${encodeURIComponent(cat)}/`} class="category-item">
-        <div class="category-icon">📦</div>
-        <span>{cat}</span>
-      </a>
+      <a href={`/categories/${encodeURIComponent(cat)}/`} class="category-item"><div class="category-icon">📦</div><span>{cat}</span></a>
     ))}
   </div>
 </BaseLayout>
