@@ -13,7 +13,6 @@ const products = defineCollection({
   }),
 });
 
-// 新增：轮播图集合
 const banners = defineCollection({
   type: 'content',
   schema: z.object({
@@ -24,7 +23,6 @@ const banners = defineCollection({
   }),
 });
 
-// 新增：自定义链接集合
 const links = defineCollection({
   type: 'content',
   schema: z.object({
